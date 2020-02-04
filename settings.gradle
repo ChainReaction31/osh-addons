@@ -21,3 +21,5 @@ subprojects.files.each { File f ->
     project(projectName).projectDir = projectFolder
   }
 }
+include 'sensorhub-driver-tvsrop'
+

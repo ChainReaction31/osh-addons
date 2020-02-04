@@ -43,4 +43,5 @@ dependencies {
   compile project(':sensorhub-process-basicmath')
   compile project(':sensorhub-process-vecmath')
   compile project(':sensorhub-process-geoloc')
+  compile project(':sensorhub-driver-onvif')
 }

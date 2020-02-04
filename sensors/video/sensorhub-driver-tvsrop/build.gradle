@@ -1,0 +1,30 @@
+plugins {
+    id 'java'
+}
+
+group 'org.sensorhub'
+version '1.4.0'
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+    compile 'org.sensorhub:sensorhub-core' + oshCoreVersion
+    compile project(':sensorhub-driver-rtpcam')
+    testCompile project(path: ':sensorhub-driver-videocam', configuration: 'testArtifacts')
+}
+
+jar{
+    manifest{
+        instruction 'Bundle-Vendor', 'Botts Innovative Research, Inc.'
+        instruction 'Bundle-Activator', 'org.sensorhub.impl.sensor.tvsrop.Activator'
+    }
+}
+
+// Exclude tests requiring a connection to the sensor
+test{
+}

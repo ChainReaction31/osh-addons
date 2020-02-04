@@ -99,9 +99,9 @@ public class OnvifCameraDriver extends AbstractSensorModule <OnvifCameraConfig>
 
 			camera.getSoap().setLogging(true);
 		} catch (ConnectException e) {
-			throw new SensorHubException("Exception occured when connecting to camera");
+			throw new SensorHubException("Exception occurred when connecting to camera");
 		} catch (SOAPException e) {
-			throw new SensorHubException("Exception occured when calling XML Web service over SOAP");
+			throw new SensorHubException("Exception occurred when calling XML Web service over SOAP");
 		} catch (Exception e) {
 			throw new SensorHubException(e.toString());
 		}
