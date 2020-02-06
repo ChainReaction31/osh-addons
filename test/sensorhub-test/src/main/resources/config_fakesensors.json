@@ -5,10 +5,10 @@
     "httpsPort": 0,
     "staticDocRootUrl": "web",
     "servletsRootUrl": "/sensorhub",
-    "maxRequestsPerSecond": 20,
     "authMethod": "NONE",
     "keyStorePath": ".keystore/ssl_keys",
     "trustStorePath": ".keystore/ssl_trust",
+    "enableCORS": true,
     "id": "5cb05c9c-9e08-4fa1-8731-ffaa5846bdc1",
     "moduleClass": "org.sensorhub.impl.service.HttpServer",
     "name": "HTTP Server",
@@ -22,19 +22,6 @@
     "id": "5cb05c9c-9123-4fa1-8731-ffaa51489678",
     "moduleClass": "org.sensorhub.ui.AdminUIModule",
     "name": "Admin UI",
-    "autoStart": true
-  },
-  {
-    "objClass": "org.sensorhub.impl.sensor.fakegps.FakeGpsConfig",
-    "googleApiUrl": "http://maps.googleapis.com/maps/api/directions/json",
-    "centerLatitude": 34.73,
-    "centerLongitude": -86.585,
-    "areaSize": 0.1,
-    "vehicleSpeed": 200.0,
-    "walkingMode": false,
-    "id": "d136b6ea-3950-4691-bf56-c84ec7d89d72",
-    "moduleClass": "org.sensorhub.impl.sensor.fakegps.FakeGpsSensor",
-    "name": "Fake GPS Sensor",
     "autoStart": true
   },
   {
@@ -60,24 +47,24 @@
     "dataProviders": [
       {
         "objClass": "org.sensorhub.impl.service.sos.SensorDataProviderConfig",
-        "sensorID": "d136b6ea-3950-4691-bf56-c84ec7d89d72",
-        "hiddenOutputs": [],
-        "liveDataTimeout": 10.0,
-        "maxFois": 10,
-        "offeringID": "urn:mysos:offering02",
-        "name": "Fake GPS",
-        "description": "Fake GPS sensor",
-        "enabled": true
-      },
-      {
-        "objClass": "org.sensorhub.impl.service.sos.SensorDataProviderConfig",
         "sensorID": "d136b6ea-3950-4691-bf56-c84ec7d89d73",
-        "hiddenOutputs": [],
+        "excludedOutputs": [],
         "liveDataTimeout": 10.0,
+        "latestRecordSource": "STREAM",
         "maxFois": 10,
         "offeringID": "urn:mysos:offering03",
         "name": "Fake Weather",
         "description": "Fake Weather sensor",
+        "enabled": true
+      },
+      {
+        "objClass": "org.sensorhub.impl.service.sos.SensorDataProviderConfig",
+        "sensorID": "d94fde53-4792-4caa-94f7-d0c2cc058e5e",
+        "excludedOutputs": [],
+        "liveDataTimeout": 10.0,
+        "latestRecordSource": "STREAM",
+        "maxFois": 10,
+        "offeringID": "urn:tvs-rop:1",
         "enabled": true
       }
     ],
@@ -140,5 +127,52 @@
     "moduleClass": "org.sensorhub.impl.service.sos.SOSService",
     "name": "SOS Service",
     "autoStart": true
+  },
+  {
+    "objClass": "org.sensorhub.impl.sensor.rtpcam.RTPCameraConfig",
+    "cameraID": "tvs-rop:1",
+    "rtsp": {
+      "objClass": "org.sensorhub.impl.sensor.rtpcam.RTSPConfig",
+      "videoPath": "/z3-1.sdp",
+      "localUdpPort": 8600,
+      "onlyConnectRtsp": true,
+      "remotePort": 554,
+      "enableTLS": false,
+      "remoteHost": "12.165.36.118",
+      "localAddress": "AUTO"
+    },
+    "connection": {
+      "objClass": "org.sensorhub.impl.comm.RobustIPConnectionConfig",
+      "checkReachability": true,
+      "connectTimeout": 3000,
+      "reconnectPeriod": 10000,
+      "reconnectAttempts": 0
+    },
+    "video": {
+      "objClass": "org.sensorhub.impl.sensor.rtpcam.RTPCameraConfig$VideoConfig",
+      "frameWidth": 1280,
+      "frameHeight": 720,
+      "frameRate": 0,
+      "grayscale": false
+    },
+    "position": {
+      "objClass": "org.sensorhub.api.sensor.PositionConfig"
+    },
+    "id": "d94fde53-4792-4caa-94f7-d0c2cc058e5e",
+    "moduleClass": "org.sensorhub.impl.sensor.rtpcam.RTPCameraDriver",
+    "name": "New RTSP/RTP Camera Driver",
+    "autoStart": false
+  },
+  {
+    "objClass": "org.sensorhub.impl.sensor.onvif.OnvifCameraConfig",
+    "port": 80,
+    "path": "/onvif/device_service",
+    "timeout": 5000,
+    "enableH264": false,
+    "enableMPEG4": false,
+    "id": "a226b6c2-4b86-4227-8797-371f5256f33b",
+    "moduleClass": "org.sensorhub.impl.sensor.onvif.OnvifCameraDriver",
+    "name": "New ONVIF Driver",
+    "autoStart": false
   }
 ]
